@@ -4,11 +4,20 @@ import '@testing-library/jest-dom/extend-expect';
 import SummaryPage from './SummaryPage';
 
 describe('<SummaryPage />', () => {
-  test('it should mount', () => {
+  test('checkbox and button', () => {
     render(<SummaryPage />);
 
-    const summaryPage = screen.getByTestId('SummaryPage');
+    const checkbox = screen.getByRole('checkbox', {
+      name: '주문하려는 것을 확인하셧나요?',
+    }) as HTMLInputElement;
 
-    expect(summaryPage).toBeInTheDocument();
+    expect(checkbox.checked).toEqual(false);
+
+    const confirmButton = screen.getByRole('button', {
+      name: '주문 확인',
+    }) as HTMLInputElement;
+
+    expect(confirmButton.disabled).toEqual(true);
+    expect(confirmButton.type).toBe('submit');
   });
 });
