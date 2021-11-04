@@ -17,3 +17,29 @@
  
  
 ```
+
+### Mock Service Worker
+
+```
+    실제 서비스에서 호출 하면 비효울적
+    대신할 목서버를 생성하자
+    1) 서비스워커를 브라우저에 등록 방법(프록시)
+    2) 노드 서버를 만드는 방법
+    
+```
+
+```typescript
+
+// setUpTest 파일로 등록 시 전역으로 삽가능
+// 모든 테스트 시작 전 실행 
+beforeAll(() => server.listen());
+
+// 한 테스트 파일이 끝나면 작동
+// 다른 테스트에 영향안끼치게 test 단위가끝나면 종료
+afterEach(() => server.resetHandlers());
+
+// 테스트 종료 후
+// 테스트 완벽히 끝나면 끄기
+afterEach(() => server.close());
+
+```
