@@ -13,4 +13,4 @@ beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 
 // 테스트 완벽히 끝나면 끄기
-afterEach(() => server.close());
+afterAll(() => server.close());
