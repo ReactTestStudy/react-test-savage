@@ -18,16 +18,17 @@
  
 ```
 
-### Mock Service Worker
+## Mock Service Worker
+실제 서비스에서 호출 하면 비효울적
+대신할 목서버를 생성하자
+- node server 혹은 브라우저 목 서버를 생성한다
+- 보다 효율적으로 관리 가능
+- 에러를 던질수도 있고 서버를 제어가능
 
-```
-    실제 서비스에서 호출 하면 비효울적
-    대신할 목서버를 생성하자
-    1) 서비스워커를 브라우저에 등록 방법(프록시)
-    2) 노드 서버를 만드는 방법
-    
-```
+## setupTests.ts
 
+- CRA 로 생성될때 생기는 파일
+- 모든 테스트 셋업에 Global 사용 할 수 있다
 ```typescript
 
 // setUpTest 파일로 등록 시 전역으로 삽가능
@@ -40,6 +41,29 @@ afterEach(() => server.resetHandlers());
 
 // 테스트 종료 후
 // 테스트 완벽히 끝나면 끄기
-afterEach(() => server.close());
+afterAll(() => server.close());
 
 ```
+
+## react-query 적용하기
+
+- 데이터 패치 캐쉬 관리하기 위해 사용
+- 사용 후 테스트 후 번거로움
+- 테스트 할때 실제로 각 유닛의 상위에 감싸줘야함
+- 테스트 안쪽에서 클라이언트 생성(밖에서 전역으로 생성시 캐쉬 옵션 작동함)
+- retry 옵션을 끄지 않으면 계속 시도때문에 테스트케이스는 시도하기 어려움
+~~~typescript jsx
+    const queryClient = new QueryClient(
+      defaultOptions: {
+        queries: {
+          retry: false,
+        },
+      }
+    );
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <Type orderType="product" />
+      </QueryClientProvider>  
+    )
+~~~

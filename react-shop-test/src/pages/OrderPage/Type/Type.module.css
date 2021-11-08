@@ -1,1 +1,4 @@
-.Type {}
+
+.optionContainer{
+    display: flex;
+}
