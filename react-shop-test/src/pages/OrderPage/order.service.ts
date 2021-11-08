@@ -1,7 +1,12 @@
-import { Product } from './order.t';
+import { Options, Product } from './order.t';
 import axios from 'axios';
 
+const Axios = axios.create({
+  baseURL: 'http://localhost:5000',
+});
 const getProducts = (): Promise<Product[]> =>
-  axios.get<Product[]>('http://localhost:5000/products').then(({ data }) => data);
+  Axios.get<Product[]>('/products').then(({ data }) => data);
 
-export { getProducts };
+const getOptions = (): Promise<Options[]> => Axios.get('options').then(({ data }) => data);
+
+export { getProducts, getOptions };

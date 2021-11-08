@@ -3,4 +3,7 @@ interface Product {
   imagePath: string;
 }
 
-export type { Product };
+interface Options {
+  name: string;
+}
+export type { Product, Options };

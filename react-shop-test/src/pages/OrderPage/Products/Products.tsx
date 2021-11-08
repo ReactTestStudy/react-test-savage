@@ -7,7 +7,11 @@ interface Props extends Product {}
 const Products = ({ name, imagePath }: Props) => {
   return (
     <div className={styles.Products} data-testid="Products">
-      <img className={styles.image} src={imagePath} alt={`${name} Product`} />
+      <img
+        className={styles.image}
+        src={`http://localhost:5000/${imagePath}`}
+        alt={`${name} Product`}
+      />
       <form className={styles.form}>
         <label className={styles.label} htmlFor="quantity">
           {name}
