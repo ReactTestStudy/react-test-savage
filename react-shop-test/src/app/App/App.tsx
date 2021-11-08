@@ -1,8 +1,8 @@
 import React from 'react';
-import { BrowserRouter, useRoutes } from 'react-router-dom';
+import { useRoutes } from 'react-router-dom';
 import './App.css';
 import SummaryPage from '../../pages/SummaryPage/SummaryPage';
-import OrderPage from '../../pages/OrderPage/OrderPage';
+import OrderPage from '../../pages/OrderPage/index/OrderPage';
 
 function App() {
   let routes = useRoutes([
@@ -10,11 +10,7 @@ function App() {
     { path: 'order', element: <OrderPage /> },
   ]);
 
-  return (
-    <>
-      <BrowserRouter>{routes}</BrowserRouter>
-    </>
-  );
+  return <>{routes}</>;
 }
 
 export default App;

@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './OrderPage.module.css';
-import Type from './Type/Type';
+import Type from '../Type/Type';
 
 const OrderPage = () => (
   <div className={styles.OrderPage} data-testid="OrderPage">
