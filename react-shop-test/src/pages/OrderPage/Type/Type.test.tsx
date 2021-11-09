@@ -1,28 +1,30 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import Type from './Type';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { server } from '../../../mocks/serever';
-import { networkErrorHandlers } from '../../../mocks/handlers';
+import {QueryClient, QueryClientProvider} from 'react-query';
+import {server} from '../../../mocks/serever';
+import {networkErrorHandlers} from '../../../mocks/handlers';
+import {Wrapper} from "react-test-wrapper/react-testing-library";
 
 const queryClientOption = {
   defaultOptions: {
     queries: {
       retry: false,
+      cache: false
     },
   },
 };
+const queryClient = new QueryClient(queryClientOption);
 
-describe('<Type />', () => {
+const WrapperComponent = new Wrapper(QueryClientProvider)
+  .withDefaultProps({
+    client: queryClient
+  })
+
+describe('Type Component', () => {
   test('display product images from server', async () => {
-    const queryClient = new QueryClient(queryClientOption);
-
-    render(
-      <QueryClientProvider client={queryClient}>
-        <Type orderType="product" />
-      </QueryClientProvider>
-    );
+    WrapperComponent.withDefaultChildren(<Type orderType='product'/>).render();
 
     const images = (await screen.findAllByRole('img', {
       name: /product$/i,
@@ -38,13 +40,7 @@ describe('<Type />', () => {
   test('when fetching product data, face an error', async () => {
     server.resetHandlers(...networkErrorHandlers);
 
-    const queryClient = new QueryClient(queryClientOption);
-
-    render(
-      <QueryClientProvider client={queryClient}>
-        <Type orderType="product" />
-      </QueryClientProvider>
-    );
+    WrapperComponent.withDefaultChildren(<Type orderType='product'/>).render();
 
     const errorBanner = await screen.findByTestId(
       'error-banner',
@@ -57,16 +53,20 @@ describe('<Type />', () => {
   });
 
   it('fetch option information from server', async () => {
-    const client = new QueryClient(queryClientOption);
-
-    render(
-      <QueryClientProvider client={client}>
-        <Type orderType="option" />
-      </QueryClientProvider>
-    );
+    WrapperComponent.withDefaultChildren(<Type orderType='option'/>).render();
 
     const optionCheckBoxes = await screen.findAllByRole('checkbox');
 
     expect(optionCheckBoxes).toHaveLength(2);
+  });
+
+  it("update product's total when product change", async () => {
+    WrapperComponent.withDefaultChildren(<Type orderType='option'/>).render();
+
+
+    // 상품 가격을 1개 올리면 1000이 되어야 한다
+    // 먼저 총가격이 이라는 role 을 찾아야한다
+    // const productsTotal =
+
   });
 });
