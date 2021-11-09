@@ -67,3 +67,15 @@ afterAll(() => server.close());
       </QueryClientProvider>  
     )
 ~~~
+
+##  react-test-wrapper 적용하기
+
+ - 각 Wrapper 를 react-query 때문에 수시로 랩핑하는 일이 귀찮아졌다
+ - Wrapper 하고 각자 자신이 사용하는 test-library 에 맞게 사용하면된다
+ - 단점) react-redux, react-intl(국제화 언어) 라이브러리를 설치해야하된다
+
+## userEvent 
+
+ - fireEvent 보다 좋다고한다.
+ - clear(): input textarea 에 텍스를 선택 한 후 제거 한다.
+ - type(): input 안에 값을 타이핑으로 채운다
