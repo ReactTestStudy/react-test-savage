@@ -71,12 +71,10 @@ const OrderContextProvider = (props: any) => {
       setOrderCounts({ ...newOrderCounts });
     };
 
-    // 넣는 칸 이 헷갈림
-    return [{ ...orderCounts, totals }, updateItemCount];
+    // 넣는 칸 이 헷갈림, 배열로 하지말고 객체로 하자
+    return { orderData: { ...orderCounts, totals }, updateItemCount };
   }, [orderCounts, totals]);
   // 변할때 나오는값을 deps 에 넣어준다
-
-  console.log('inital value', value);
 
   return <OrderContext.Provider value={value} {...props} />;
 };

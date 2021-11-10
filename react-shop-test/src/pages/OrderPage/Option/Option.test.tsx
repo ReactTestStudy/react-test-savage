@@ -5,7 +5,7 @@ import Option from './Option';
 
 describe('<Option />', () => {
   test('it should mount', () => {
-    render(<Option name={'hello'} />);
+    render(<Option name={'hello'} updateItemCount={(itemName, currentCount, orderType) => {}} />);
 
     const option = screen.getByTestId('Option');
 

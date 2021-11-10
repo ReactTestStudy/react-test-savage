@@ -79,3 +79,9 @@ afterAll(() => server.close());
  - fireEvent 보다 좋다고한다.
  - clear(): input textarea 에 텍스를 선택 한 후 제거 한다.
  - type(): input 안에 값을 타이핑으로 채운다
+                                 
+## Context 정리
+
+ - createContext 함수로 생성 
+ - 생성된 Context 를 변수에담아 내가 공유하고 싶은 부분을 안에있는 Provider 컴포넌트로 감싸준다
+ - 그 대신 바로 Export 하지 말고 바로 안에서 Provider 를 생성해서 Export 해줬다

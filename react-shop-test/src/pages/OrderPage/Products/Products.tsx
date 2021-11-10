@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import styles from './Products.module.css';
-import { Product } from '../order.t';
+import { OrderType, Product } from '../../../type/order.t';
 
-interface Props extends Product {}
+interface Props extends Product {
+  updateItemCount: (itemName: string, currentCount: number, orderType: OrderType) => void;
+}
 
-const Products = ({ name, imagePath }: Props) => {
+const Products = ({ name, imagePath, updateItemCount }: Props) => {
+  const onChangeQuantity = (e: ChangeEvent<HTMLInputElement>) => {
+    updateItemCount(name, parseInt(e.currentTarget.value), OrderType.Products);
+  };
+
   return (
     <div className={styles.Products} data-testid="Products">
       <img
@@ -16,7 +22,14 @@ const Products = ({ name, imagePath }: Props) => {
         <label className={styles.label} htmlFor="quantity">
           {name}
         </label>
-        <input type="number" className={styles.input} name="quantity" min="0" defaultValue={0} />
+        <input
+          type="number"
+          className={styles.input}
+          name="quantity"
+          min="0"
+          defaultValue={0}
+          onChange={onChangeQuantity}
+        />
       </form>
     </div>
   );

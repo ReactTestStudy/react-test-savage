@@ -6,7 +6,7 @@ const SummaryPage = () => {
   const [checked, setChecked] = useState(false);
   let navigate = useNavigate();
 
-  const handleCheckbox = (e: ChangeEvent) => {
+  const handleCheckbox = (e: ChangeEvent<HTMLInputElement>) => {
     setChecked(prevState => !prevState);
   };
 
