@@ -63,7 +63,7 @@ afterAll(() => server.close());
 
     render(
       <QueryClientProvider client={queryClient}>
-        <Type orderType="product" />
+        <OrderType orderType="product" />
       </QueryClientProvider>  
     )
 ~~~

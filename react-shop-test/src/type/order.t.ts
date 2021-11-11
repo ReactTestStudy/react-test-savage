@@ -8,12 +8,12 @@ interface Options {
 }
 export type { Product, Options };
 
-export enum OrderType {
+export enum OrderTypes {
   Products = 'products',
   Options = 'options',
 }
 
 export type OrderCounts = {
-  [OrderType.Products]: object;
-  [OrderType.Options]: object;
+  [OrderTypes.Products]: object;
+  [OrderTypes.Options]: object;
 };

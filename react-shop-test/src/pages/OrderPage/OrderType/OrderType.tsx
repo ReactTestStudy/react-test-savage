@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { useQuery } from 'react-query';
-import styles from './Type.module.css';
+import styles from './OrderType.module.css';
 import Products from '../Products/Products';
-import { Options, OrderType, Product } from '../../../type/order.t';
+import { Options, OrderTypes, Product } from '../../../type/order.t';
 import { getOptions, getProducts } from '../order.service';
 import ErrorBanner from '../../../components/ErrorBanner/ErrorBanner';
 import Option from '../Option/Option';
@@ -12,15 +12,16 @@ type Props = {
   orderType: 'product' | 'option';
 };
 
-const Type = ({ orderType }: Props) => {
+const OrderType = ({ orderType }: Props) => {
   const { orderData, updateItemCount } = useContext(OrderContext);
+  const totalType = orderType === 'product' ? OrderTypes.Products : OrderTypes.Options;
 
   const { data, isError, isLoading } = useQuery<Product[] | Options[], Error>(
     `get-${orderType}`,
     orderType === 'product' ? getProducts : getOptions
   );
 
-  const handleCount = (itemName: string, currentCount: number, orderType: OrderType) => {
+  const handleCount = (itemName: string, currentCount: number, orderType: OrderTypes) => {
     updateItemCount(itemName, currentCount, orderType);
   };
 
@@ -45,7 +46,7 @@ const Type = ({ orderType }: Props) => {
     <>
       <h2>주문 종류</h2>
       <p>하나의 가격</p>
-      <p>총 가격:$ {}</p>
+      <p>총 가격: ${orderData.totals[totalType]}</p>
       <div
         className={styles.optionContainer}
         style={{
@@ -58,4 +59,4 @@ const Type = ({ orderType }: Props) => {
   );
 };
 
-export default Type;
+export default OrderType;

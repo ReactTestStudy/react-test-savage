@@ -1,22 +1,22 @@
 import { createContext, useEffect, useMemo, useState } from 'react';
-import { OrderCounts, OrderType } from '../type/order.t';
+import { OrderCounts, OrderTypes } from '../type/order.t';
 
 const OrderContext = createContext({
   orderData: {
     products: new Map<string, number>(),
     options: new Map<string, number>(),
     totals: {
-      [OrderType.Products]: 0,
-      [OrderType.Options]: 0,
+      [OrderTypes.Products]: 0,
+      [OrderTypes.Options]: 0,
       total: 0,
     },
   },
-  updateItemCount: (itemName: string, newItemCount: number, orderType: OrderType) => {},
+  updateItemCount: (itemName: string, newItemCount: number, orderType: OrderTypes) => {},
 });
 
 type Totals = {
-  [OrderType.Products]: number;
-  [OrderType.Options]: number;
+  [OrderTypes.Products]: number;
+  [OrderTypes.Options]: number;
   total: number;
 };
 
@@ -27,17 +27,17 @@ const OrderContextProvider = (props: any) => {
   });
 
   const [totals, setTotals] = useState<Totals>({
-    [OrderType.Products]: 0,
-    [OrderType.Options]: 0,
+    [OrderTypes.Products]: 0,
+    [OrderTypes.Options]: 0,
     total: 0,
   });
 
   const pricePreItems = {
-    [OrderType.Products]: 1000,
-    [OrderType.Options]: 500,
+    [OrderTypes.Products]: 1000,
+    [OrderTypes.Options]: 500,
   };
 
-  function calculateSubtotal(productType: OrderType, orderCounts: OrderCounts): number {
+  function calculateSubtotal(productType: OrderTypes, orderCounts: OrderCounts): number {
     let optionCount = 0;
     let orderCountsMap = orderCounts[productType] as Map<string, number>;
 
@@ -49,23 +49,23 @@ const OrderContextProvider = (props: any) => {
   }
 
   useEffect(() => {
-    const productsTotal = calculateSubtotal(OrderType.Products, orderCounts);
-    const optionsTotal = calculateSubtotal(OrderType.Products, orderCounts);
+    const productsTotal = calculateSubtotal(OrderTypes.Products, orderCounts);
+    const optionsTotal = calculateSubtotal(OrderTypes.Products, orderCounts);
     const total = productsTotal * optionsTotal;
 
     setTotals({
-      [OrderType.Products]: productsTotal,
-      [OrderType.Options]: optionsTotal,
+      [OrderTypes.Products]: productsTotal,
+      [OrderTypes.Options]: optionsTotal,
       total,
     });
   }, [orderCounts]);
 
   //
   const value = useMemo(() => {
-    const updateItemCount = (itemName: string, newItemCount: number, orderType: OrderType) => {
+    const updateItemCount = (itemName: string, newItemCount: number, orderTypes: OrderTypes) => {
       const newOrderCounts = { ...orderCounts };
 
-      const orderCountsMap = orderCounts[orderType] as Map<string, number>;
+      const orderCountsMap = orderCounts[orderTypes] as Map<string, number>;
 
       orderCountsMap.set(itemName, newItemCount);
       setOrderCounts({ ...newOrderCounts });
