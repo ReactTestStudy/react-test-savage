@@ -48,10 +48,12 @@ const OrderContextProvider = (props: any) => {
     return optionCount * pricePreItems[productType];
   }
 
+  // test때문에 버그 수정함
   useEffect(() => {
     const productsTotal = calculateSubtotal(OrderTypes.Products, orderCounts);
-    const optionsTotal = calculateSubtotal(OrderTypes.Products, orderCounts);
-    const total = productsTotal * optionsTotal;
+    const optionsTotal = calculateSubtotal(OrderTypes.Options, orderCounts);
+    // const total = productsTotal * optionsTotal; 테스트를 통한 버그 수정
+    const total = productsTotal + optionsTotal;
 
     setTotals({
       [OrderTypes.Products]: productsTotal,

@@ -15,6 +15,7 @@ type Props = {
 const OrderType = ({ orderType }: Props) => {
   const { orderData, updateItemCount } = useContext(OrderContext);
   const totalType = orderType === 'product' ? OrderTypes.Products : OrderTypes.Options;
+  const korOrderType = orderType === 'product' ? '상품' : '옵션';
 
   const { data, isError, isLoading } = useQuery<Product[] | Options[], Error>(
     `get-${orderType}`,
@@ -46,7 +47,9 @@ const OrderType = ({ orderType }: Props) => {
     <>
       <h2>주문 종류</h2>
       <p>하나의 가격</p>
-      <p>총 가격: ${orderData.totals[totalType]}</p>
+      <p>
+        {korOrderType} 총 가격: ${orderData.totals[totalType]}
+      </p>
       <div
         className={styles.optionContainer}
         style={{

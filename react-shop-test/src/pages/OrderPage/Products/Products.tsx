@@ -1,14 +1,15 @@
 import React, { ChangeEvent } from 'react';
 import styles from './Products.module.css';
-import { OrderType, Product } from '../../../type/order.t';
+import { OrderTypes, Product } from '../../../type/order.t';
 
 interface Props extends Product {
-  updateItemCount: (itemName: string, currentCount: number, orderType: OrderType) => void;
+  updateItemCount: (itemName: string, currentCount: number, orderType: OrderTypes) => void;
 }
 
 const Products = ({ name, imagePath, updateItemCount }: Props) => {
-  const onChangeQuantity = (e: ChangeEvent<HTMLInputElement>) => {
-    updateItemCount(name, parseInt(e.currentTarget.value), OrderType.Products);
+  const onChangeQuantity = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) => {
+    const count = isNaN(parseInt(value)) ? 0 : parseInt(value);
+    updateItemCount(name, count, OrderTypes.Products);
   };
 
   return (
@@ -19,15 +20,15 @@ const Products = ({ name, imagePath, updateItemCount }: Props) => {
         alt={`${name} Product`}
       />
       <form className={styles.form}>
-        <label className={styles.label} htmlFor="quantity">
+        <label className={styles.label} htmlFor={name}>
           {name}
         </label>
         <input
+          id={name}
           type="number"
           className={styles.input}
           name="quantity"
           min="0"
-          defaultValue={0}
           onChange={onChangeQuantity}
         />
       </form>

@@ -1,15 +1,15 @@
 import React, { ChangeEvent } from 'react';
 import styles from './Option.module.css';
-import { OrderType } from '../../../type/order.t';
+import { OrderTypes } from '../../../type/order.t';
 
 type Props = {
   name: string;
-  updateItemCount: (itemName: string, currentCount: number, orderType: OrderType) => void;
+  updateItemCount: (itemName: string, currentCount: number, orderType: OrderTypes) => void;
 };
 
 const Option = ({ name, updateItemCount }: Props) => {
   const handleChecked = ({ currentTarget: { checked } }: ChangeEvent<HTMLInputElement>) => {
-    updateItemCount(name, checked ? 1 : 0, OrderType.Options);
+    updateItemCount(name, checked ? 1 : 0, OrderTypes.Options);
   };
 
   return (

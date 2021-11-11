@@ -68,20 +68,54 @@ afterAll(() => server.close());
     )
 ~~~
 
-##  react-test-wrapper 적용하기
-
- - 각 Wrapper 를 react-query 때문에 수시로 랩핑하는 일이 귀찮아졌다
- - Wrapper 하고 각자 자신이 사용하는 test-library 에 맞게 사용하면된다
- - 단점) react-redux, react-intl(국제화 언어) 라이브러리를 설치해야하된다
-
-## userEvent 
-
- - fireEvent 보다 좋다고한다.
- - clear(): input textarea 에 텍스를 선택 한 후 제거 한다.
- - type(): input 안에 값을 타이핑으로 채운다
+## test.tsx Tips  
+                
+ - ### element tips
+   - spinnbutton: input number type 일 경우 찾을 수 있다, 하지만 label 을 매치잇켜줘야한다
+   
+ - ### userEvent
+   - fireEvent 보다 좋다고 한다.(인간 친화적)
+   - clear(): input textarea 에 텍스를 선택 한 후 제거 한다.
+   - type(): input 안에 값을 타이핑으로 채운다
+ - ### 느낀점
+   - 케이스를 좀 복합적으로 해야겟다(지웟다 썻다 반복, )
+   - toHaveContent 는 않좋은거같다 '500' 일 경우 1500, 3500, 다 통과가 된다
+   - 항상 내가 하고 싶은것을 하기전에 초기화를 시켜주자
+   - 너무 각 컴포넌트 말고 feature 를 잘잡아서 분리해주는것도 나쁘지않다. 
+   - 확실히 버그 잡기가 용이하다(Context 버그만 2개는 잡아줌!!)
                                  
 ## Context 정리
 
  - createContext 함수로 생성 
  - 생성된 Context 를 변수에담아 내가 공유하고 싶은 부분을 안에있는 Provider 컴포넌트로 감싸준다
  - 그 대신 바로 Export 하지 말고 바로 안에서 Provider 를 생성해서 Export 해줬다
+
+## Wrapper
+
+ - Provider 즉 전역으로 감싸주는것을 사용할때 사용한다
+ - Wrapper 라는 함수가 Render 함수에 존재한다, 하지만 일일히 번거롭기때문에 test-util.tsx 를 만들어서 보관하자
+ 
+~~~typescript jsx
+// jest 공식페이지에서 가져옴
+// 전체 프로바이더를 만든다
+const AllTheProviders: FC = ({ children }) => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <OrderContextProvider>{children}</OrderContextProvider>
+    </QueryClientProvider>
+  );
+};
+// 렌더 함수와 옴션값을 다시 넣어준다
+const customRender = (ui: ReactElement, options?: Omit<RenderOptions, 'wrapper'>) =>
+  render(ui, { wrapper: AllTheProviders, ...options });
+
+// re-export everything
+// test.util 로 간단히 다시 불러서 사용가능하다
+// import { render, screen } from '../../util/test.utils';
+export * from '@testing-library/react';
+
+// override render method
+export { customRender as render };
+
+~~~
+
