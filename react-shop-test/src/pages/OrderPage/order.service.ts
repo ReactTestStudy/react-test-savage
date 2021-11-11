@@ -1,4 +1,4 @@
-import { Options, Product } from './order.t';
+import { Options, Product } from '../../type/order.t';
 import axios from 'axios';
 
 const Axios = axios.create({

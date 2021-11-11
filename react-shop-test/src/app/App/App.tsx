@@ -3,6 +3,7 @@ import { useRoutes } from 'react-router-dom';
 import './App.css';
 import SummaryPage from '../../pages/SummaryPage/SummaryPage';
 import OrderPage from '../../pages/OrderPage/index/OrderPage';
+import { OrderContextProvider } from '../../context/OrderContext';
 
 function App() {
   let routes = useRoutes([
@@ -10,7 +11,7 @@ function App() {
     { path: 'order', element: <OrderPage /> },
   ]);
 
-  return <>{routes}</>;
+  return <OrderContextProvider>{routes}</OrderContextProvider>;
 }
 
 export default App;

@@ -1,28 +1,14 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import Type from './Type';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import OrderType from './OrderType';
 import { server } from '../../../mocks/serever';
 import { networkErrorHandlers } from '../../../mocks/handlers';
+import { render } from '../../util/test.utils';
 
-const queryClientOption = {
-  defaultOptions: {
-    queries: {
-      retry: false,
-    },
-  },
-};
-
-describe('<Type />', () => {
+describe('OrderType Component', () => {
   test('display product images from server', async () => {
-    const queryClient = new QueryClient(queryClientOption);
-
-    render(
-      <QueryClientProvider client={queryClient}>
-        <Type orderType="product" />
-      </QueryClientProvider>
-    );
+    render(<OrderType orderType={'product'} />);
 
     const images = (await screen.findAllByRole('img', {
       name: /product$/i,
@@ -38,13 +24,7 @@ describe('<Type />', () => {
   test('when fetching product data, face an error', async () => {
     server.resetHandlers(...networkErrorHandlers);
 
-    const queryClient = new QueryClient(queryClientOption);
-
-    render(
-      <QueryClientProvider client={queryClient}>
-        <Type orderType="product" />
-      </QueryClientProvider>
-    );
+    render(<OrderType orderType={'product'} />);
 
     const errorBanner = await screen.findByTestId(
       'error-banner',
@@ -57,13 +37,7 @@ describe('<Type />', () => {
   });
 
   it('fetch option information from server', async () => {
-    const client = new QueryClient(queryClientOption);
-
-    render(
-      <QueryClientProvider client={client}>
-        <Type orderType="option" />
-      </QueryClientProvider>
-    );
+    render(<OrderType orderType={'option'} />);
 
     const optionCheckBoxes = await screen.findAllByRole('checkbox');
 

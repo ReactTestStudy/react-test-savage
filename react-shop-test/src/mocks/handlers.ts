@@ -1,4 +1,6 @@
-import { RequestHandler, rest } from 'msw';
+import { RequestHandler, ResponseComposition, rest, RestContext, RestRequest } from 'msw';
+
+// const responseResolver = (req: RestRequest, res: ResponseComposition, context: RestContext) => {};
 
 export const handlers: RequestHandler[] = [
   rest.get('http://localhost:5000/products', (req, res, context) => {
