@@ -33,13 +33,16 @@ describe('App', () => {
 
     /// 주문 확인 페이지 ////
     const summaryHeading = screen.getByRole('heading', {
+      level: 1,
       name: '주문 확인',
     });
     const productsHeading = screen.getByRole('heading', {
-      name: '여행 상품: 5000',
+      name: '여행 상품: 5500',
+      level: 2,
     });
     const optionsHeading = screen.getByRole('heading', {
       name: '옵션: 500',
+      level: 2,
     });
     const confirmCheckbox = screen.getByRole('checkbox', {
       name: '주문하려는 것을 확인하셧나요?',
