@@ -30,5 +30,36 @@ describe('App', () => {
     });
 
     userEvent.click(orderButton);
+
+    /// 주문 확인 페이지 ////
+    const summaryHeading = screen.getByRole('heading', {
+      name: '주문 확인',
+    });
+    const productsHeading = screen.getByRole('heading', {
+      name: '여행 상품: 5000',
+    });
+    const optionsHeading = screen.getByRole('heading', {
+      name: '옵션: 500',
+    });
+    const confirmCheckbox = screen.getByRole('checkbox', {
+      name: '주문하려는 것을 확인하셧나요?',
+    });
+
+    const confirmOrderButton = screen.getByRole('button', {
+      name: '주문 확인',
+    });
+
+    // 단순 document 안에 렌더링 되어잇는지 같음
+    expect(summaryHeading).toBeInTheDocument();
+    expect(productsHeading).toBeInTheDocument();
+    expect(optionsHeading).toBeInTheDocument();
+    expect(screen.getByText('2 America')).toBeInTheDocument();
+    expect(screen.getByText('3 England')).toBeInTheDocument();
+    expect(screen.getByText('Insurance')).toBeInTheDocument();
+
+    userEvent.click(confirmCheckbox);
+    confirmOrderButton.click();
+
+    ///// 주문 완료 페이지 ////
   });
 });
