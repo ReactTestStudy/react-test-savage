@@ -12,7 +12,7 @@ const SummaryPage = () => {
 
   const goOrderPage = (e: MouseEvent) => {
     e.preventDefault();
-    navigate('order');
+    navigate('complete');
   };
 
   return (

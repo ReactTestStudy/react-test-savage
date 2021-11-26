@@ -4,7 +4,7 @@ import '@testing-library/jest-dom/extend-expect';
 import OrderType from './OrderType';
 import { server } from '../../../mocks/serever';
 import { networkErrorHandlers } from '../../../mocks/handlers';
-import { render } from '../../util/test.utils';
+import { render } from '../../util/test.util';
 
 describe('OrderType Component', () => {
   test('display product images from server', async () => {

@@ -1,7 +1,7 @@
 import OrderType from '../OrderType/OrderType';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import { render, screen } from '../../util/test.utils';
+import { render, screen } from '../../util/test.util';
 import OrderPage from '../index/OrderPage';
 
 describe('OrderType Component', () => {

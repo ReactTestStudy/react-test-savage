@@ -1,7 +1,8 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { FC, ReactElement } from 'react';
-import { render, RenderOptions } from '@testing-library/react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { OrderContextProvider } from '../../context/OrderContext';
+import { RenderOptions, render } from '@testing-library/react';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -13,9 +14,11 @@ const queryClient = new QueryClient({
 
 const AllTheProviders: FC = ({ children }) => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <OrderContextProvider>{children}</OrderContextProvider>
-    </QueryClientProvider>
+    <Router>
+      <QueryClientProvider client={queryClient}>
+        <OrderContextProvider>{children}</OrderContextProvider>
+      </QueryClientProvider>
+    </Router>
   );
 };
 
