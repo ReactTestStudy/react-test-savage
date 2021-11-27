@@ -64,5 +64,22 @@ describe('App', () => {
     confirmOrderButton.click();
 
     ///// 주문 완료 페이지 ////
+    const loading = screen.getByText(/loading/i);
+    expect(loading).toBeInTheDocument();
+
+    const completeHeader = await screen.findByRole('heading', {
+      level: 1,
+      name: '주문이 성공했습니다',
+    });
+
+    expect(completeHeader).toBeInTheDocument();
+
+    const loadingDisappeared = screen.queryByText('loading');
+    expect(loadingDisappeared).not.toBeInTheDocument();
+
+    const firstPageButton = screen.getByRole('button', {
+      name: '첫 페이지로 돌아가기',
+    });
+    userEvent.click(firstPageButton);
   });
 });
