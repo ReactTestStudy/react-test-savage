@@ -17,3 +17,9 @@ export type OrderCounts = {
   [OrderTypes.Products]: object;
   [OrderTypes.Options]: object;
 };
+
+export type Totals = {
+  [OrderTypes.Products]: number;
+  [OrderTypes.Options]: number;
+  total: number;
+};

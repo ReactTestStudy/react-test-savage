@@ -1,5 +1,5 @@
 import { createContext, useEffect, useMemo, useState } from 'react';
-import { OrderCounts, OrderTypes } from '../type/order.t';
+import { OrderCounts, OrderTypes, Totals } from '../type/order.t';
 
 const OrderContext = createContext({
   orderData: {
@@ -13,12 +13,6 @@ const OrderContext = createContext({
   },
   updateItemCount: (itemName: string, newItemCount: number, orderType: OrderTypes) => {},
 });
-
-type Totals = {
-  [OrderTypes.Products]: number;
-  [OrderTypes.Options]: number;
-  total: number;
-};
 
 const OrderContextProvider = (props: any) => {
   const [orderCounts, setOrderCounts] = useState<OrderCounts>({

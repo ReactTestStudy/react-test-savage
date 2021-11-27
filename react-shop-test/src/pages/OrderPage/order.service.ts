@@ -1,4 +1,4 @@
-import { Options, Product } from '../../type/order.t';
+import { Options, Product, Totals } from '../../type/order.t';
 import axios from 'axios';
 
 const Axios = axios.create({
@@ -9,4 +9,11 @@ const getProducts = (): Promise<Product[]> =>
 
 const getOptions = (): Promise<Options[]> => Axios.get('options').then(({ data }) => data);
 
-export { getProducts, getOptions };
+const postOrder = (orderData: {
+  totals: Totals;
+  products: Map<string, number>;
+  options: Map<string, number>;
+}): Promise<{ orderNumber: number; price: number }[]> =>
+  Axios.post('/order', { ...orderData }).then(({ data }) => data);
+
+export { getProducts, getOptions, postOrder };

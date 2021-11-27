@@ -2,6 +2,12 @@ import { RequestHandler, ResponseComposition, rest, RestContext, RestRequest } f
 
 // const responseResolver = (req: RestRequest, res: ResponseComposition, context: RestContext) => {};
 
+interface Totals {
+  products: number;
+  options: number;
+  total: number;
+}
+
 const defaultUrl = 'http://localhost:5000';
 
 export const handlers: RequestHandler[] = [
@@ -22,11 +28,19 @@ export const handlers: RequestHandler[] = [
   rest.get(`${defaultUrl}/options`, (req, res, context) => {
     return res(context.json([{ name: 'Insurance' }, { name: 'Dinner' }]));
   }),
-  rest.post(`${defaultUrl}/orders`, (req, res, context) => {
-    let dummyData = [{ orderNumber: 21232343234, price: 2000 }];
 
-    return res(context.json(dummyData));
-  }),
+  rest.post(
+    `${defaultUrl}/order`,
+    (req: RestRequest<Record<'totals' | 'products' | 'options', Totals>>, res, context) => {
+      // console.log({ req }, 'mock req');
+
+      const total = req.body?.totals.total;
+
+      let dummyData = [{ orderNumber: 21232343234, price: total }];
+
+      return res(context.json(dummyData));
+    }
+  ),
 ];
 
 export const networkErrorHandlers = [
