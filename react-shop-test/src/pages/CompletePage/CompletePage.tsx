@@ -7,7 +7,7 @@ import { OrderContext } from '../../context/OrderContext';
 import ErrorBanner from '../../components/ErrorBanner/ErrorBanner';
 
 const CompletePage = () => {
-  const { orderData } = useContext(OrderContext);
+  const { orderData, resetOrder } = useContext(OrderContext);
 
   const { data, isLoading, isError } = useQuery<{ orderNumber: number; price: number }[]>(
     ['order', orderData],
@@ -16,6 +16,7 @@ const CompletePage = () => {
   let navigate = useNavigate();
 
   const goFirstPage = (e: MouseEvent) => {
+    resetOrder();
     e.preventDefault();
     navigate('/');
   };

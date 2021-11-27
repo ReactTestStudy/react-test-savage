@@ -72,7 +72,11 @@ afterAll(() => server.close());
                 
  - ### element tips
    - spinnbutton: input number type 일 경우 찾을 수 있다, 하지만 label 을 매치잇켜줘야한다
-   
+       
+ - getByRole 
+   - aria-role 기반 혹은 html 태그 기반으로 찾는다
+   - name 속성은 태그 안에 있는 텍스트 값으로도 확인한다
+
  - ### userEvent
    - fireEvent 보다 좋다고 한다.(인간 친화적)
    - clear(): input textarea 에 텍스를 선택 한 후 제거 한다.
@@ -118,4 +122,30 @@ export * from '@testing-library/react';
 export { customRender as render };
 
 ~~~
+
+### Act Error
+~~~javascript
+
+    // 첫번째 페이지로 들어간다. 들어가면 react call stack 에 벗어나는 에러가 나온다
+    userEvent.click(firstPageButton);
+
+    // act 가 없어서 에러가 나온다 하는데 나오지 않음, 
+    // act 와 같은 함수, 비동기 함수로 같이 그 다음 화면 컴포넌트 렌디링 페이지를 대기를 시킨다   
+    await waitFor(async () => {
+      screen.getByRole('spinbutton', {
+        name: 'America',
+      });
+    });
+		
+	// 위에 두개의 함수를 합쳐서 만든게 findByRole !!
+    await screen.findByRole('spinbutton', {
+      name: 'America',
+    });
+
+~~~
+
+### ETC
+  - Array.from(), 유사 배열 객체를 배열로 만들어준다
+  - Map 
+  - Table html tag, thead, tbody, tFooter 로 감싸야한다.
 

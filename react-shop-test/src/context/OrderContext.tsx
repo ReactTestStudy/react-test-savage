@@ -12,6 +12,7 @@ const OrderContext = createContext({
     },
   },
   updateItemCount: (itemName: string, newItemCount: number, orderType: OrderTypes) => {},
+  resetOrder: () => {},
 });
 
 const OrderContextProvider = (props: any) => {
@@ -67,8 +68,18 @@ const OrderContextProvider = (props: any) => {
       setOrderCounts({ ...newOrderCounts });
     };
 
+    const resetOrder = () => {
+      setOrderCounts({ products: new Map<string, number>(), options: new Map<string, number>() });
+      // setTotals({
+      //   [OrderTypes.Products]: 0,
+      //   [OrderTypes.Options]: 0,
+      //   total: 0,
+      // });
+      // 굳이 할 필요 없었다 count 돌리면 알아서 해줬었는데. 깜빡
+    };
+
     // 넣는 칸 이 헷갈림, 배열로 하지말고 객체로 하자
-    return { orderData: { ...orderCounts, totals }, updateItemCount };
+    return { orderData: { ...orderCounts, totals }, updateItemCount, resetOrder };
   }, [orderCounts, totals]);
   // 변할때 나오는값을 deps 에 넣어준다
 

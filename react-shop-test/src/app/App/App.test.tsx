@@ -1,4 +1,4 @@
-import { render, screen } from '../../pages/util/test.util';
+import { render, waitFor, screen } from '../../pages/util/test.util';
 import App from './App';
 import userEvent from '@testing-library/user-event';
 
@@ -81,5 +81,15 @@ describe('App', () => {
       name: '첫 페이지로 돌아가기',
     });
     userEvent.click(firstPageButton);
+
+    // 비동기 타이밍으로 인해 바로 넘어간다고 하는데 나는 나오지 않앗음
+    // act Error
+
+    ///// 다시 주문 페이지 /////////
+    const productsTotal = screen.getByText('상품 총 가격: $0');
+    const optionsTotal = screen.getByText('옵션 총 가격: $0');
+
+    expect(productsTotal).toBeInTheDocument();
+    expect(optionsTotal).toBeInTheDocument();
   });
 });
