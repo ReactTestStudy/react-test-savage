@@ -1,0 +1,18 @@
+.Products {
+    text-align: center;
+}
+
+.Products .image {
+    width: 75%;
+}
+
+.Products .form{
+    margin-top: 10px;
+}
+
+.Products .label{
+    text-align: right;
+}
+.Products .input {
+    margin-left: 7px;
+}
